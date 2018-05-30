@@ -1,0 +1,1078 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <title>Control 5</title>
+        <meta charset='UTF-8'>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script type='text/javascript'>
+            $(document).ready( function() {
+
+                // Since we cannot make a direct server request in this case, we will just hard-code dummy data for presentation.
+                var data = {
+                "blinds": {
+                    "dining_room": 5,
+                    "hallway_1": 100,
+                    "hallway_2": 100,
+                    "family_room": 15,
+                    "kitchen": 5,
+                    "living_room": 20,
+                    "office": 100
+                },
+                "lighting": {
+                    "indoors": {
+                        "dining_room": 80,
+                            "hallway_1": 30,
+                            "hallway_2": 30,
+                            "family_room": 10,
+                            "kitchen": 80,
+                            "living_room": 20,
+                            "office": 80
+                    },
+                    "outdoors": {
+                        "frontyard": {
+                            "gate": 90,
+                            "mailbox": 10,
+                            "porch": 100
+                        },
+                        "left_side": 20,
+                        "right_side": 20,
+                        "backyard": {
+                            "lawn": 15,
+                            "patio": 15,
+                            "sports_court": 65
+                        }
+                    }
+                },
+                "temperature": {
+                    "dining_room": 72,
+                    "hallway_1": 71,
+                    "hallway_2": 71,
+                    "family_room": 72,
+                    "kitchen": 75,
+                    "living_room": 72,
+                    "office": 70
+                },
+                "pool": {
+                    "light": false,
+                    "sweeper": false,
+                    "temperature": 96
+                },
+                "fireplace": {
+                    "family_room": false,
+                    "living_room": true
+                }, 
+                "garage_doors": {
+                    "one": false,
+                    "two": false,
+                    "three": false,
+                    "gate": true
+                }
+                }
+
+                // =============================
+                // 1. Populate the data accordingly.
+                // =============================
+                // Blinds
+                $('#blinds-dining-room').html('Dining Room: <em>' + data.blinds.dining_room + '% Closed</em>') ;
+                $('#blinds-hallway-1').html('Hallway 1: <em>' + data.blinds.hallway_1 + '% Closed</em>') ;
+                $('#blinds-hallway-2').html('Hallway 2: <em>' + data.blinds.hallway_2 + '% Closed</em>') ;
+                $('#blinds-family-room').html('Family Room: <em>' + data.blinds.family_room + '% Closed</em>') ;
+                $('#blinds-kitchen').html('Kitchen: <em>' + data.blinds.kitchen + '% Closed</em>') ;
+                $('#blinds-living-room').html('Living Room: <em>' + data.blinds.living_room + '% Closed</em>') ;
+                $('#blinds-office').html('Office: <em>' + data.blinds.office + '% Closed</em>') ;
+                
+                // Fireplace
+                $('#fireplace-family-room').html('Family Room: <em>' + (data.fireplace.family_room ? "On" : "Off") + "</em>") ;
+                $('#fireplace-living-room').html('Living Room: <em>' + (data.fireplace.living_room ? "On" : "Off") + "</em>") ;
+
+                // Garage Doors
+                $('#garage-one').html('One: <em>' + (data.garage_doors.one ? "Open" : "Closed") + '</em>') ;
+                $('#garage-two').html('Two: <em>' + (data.garage_doors.two ? "Open" : "Closed") + '</em>') ;
+                $('#garage-three').html('Three: <em>' + (data.garage_doors.three ? "Open" : "Closed") + '</em>') ;
+                $('#garage-gate').html('Gate: <em>' + (data.garage_doors.gate ? "Open" : "Closed") + '</em>') ;
+
+                // Lighting
+                $('#lighting-dining-room').html('Dining Room: <em>' + data.lighting.indoors.dining_room + '%</em>') ;
+                $('#lighting-hallway-1').html('Hallway 1: <em>' + data.lighting.indoors.hallway_1 + '%</em>') ;
+                $('#lighting-hallway-2').html('Hallway 2: <em>' + data.lighting.indoors.hallway_2 + '%</em>') ;
+                $('#lighting-family-room').html('Family Room: <em>' + data.lighting.indoors.family_room + '%</em>') ;
+                $('#lighting-kitchen').html('Kitchen: <em>' + data.lighting.indoors.kitchen + '%</em>') ;
+                $('#lighting-living-room').html('Living Room: <em>' + data.lighting.indoors.living_room + '%</em>') ;
+                $('#lighting-office').html('Office: <em>' + data.lighting.indoors.office + '%</em>') ;
+
+                $('#lighting-gate').html('Gate: <em>' + data.lighting.outdoors.frontyard.gate + '%</em>') ;
+                $('#lighting-mailbox').html('Mailbox: <em>' + data.lighting.outdoors.frontyard.mailbox + '%</em>') ;
+                $('#lighting-porch').html('Porch: <em>' + data.lighting.outdoors.frontyard.porch + '%</em>') ;
+
+                $('#lighting-left-side').html('Left Side: <em>' + data.lighting.outdoors.left_side + '%</em>') ;
+                $('#lighting-right-side').html('Right Side: <em>' + data.lighting.outdoors.right_side + '%</em>') ;
+
+                $('#lighting-lawn').html('Lawn: <em>' + data.lighting.outdoors.backyard.lawn + '%</em>') ;
+                $('#lighting-patio').html('Patio: <em>' + data.lighting.outdoors.backyard.patio+ '%</em>') ;
+                $('#lighting-sports-court').html('Sports Court: <em>' + data.lighting.outdoors.backyard.sports_court + '%</em>') ;
+
+                // Pool
+                $('#pool-light').html('Light: <em>' + (data.pool.light ? "On" : "Off") + "</em>") ;
+                $('#pool-sweeper').html('Sweeper: <em>' + (data.pool.sweeper ? "On" : "Off") + "</em>") ;
+                $('#pool-temperature').html('Temperature: <em>' + data.pool.temperature + '&#8457;</em>') ;
+
+                // Temperature
+                $('#temperature-dining-room').html('Dining Room: <em>' + data.temperature.dining_room + '&#8457;</em>') ;
+                $('#temperature-hallway-1').html('Hallway 1: <em>' + data.temperature.hallway_1 + '&#8457;</em>') ;
+                $('#temperature-hallway-2').html('Hallway 2: <em>' + data.temperature.hallway_2 + '&#8457;</em>') ;
+                $('#temperature-family-room').html('Family Room: <em>' + data.temperature.family_room + '&#8457;</em>') ;
+                $('#temperature-kitchen').html('Kitchen: <em>' + data.temperature.kitchen + '&#8457;</em>') ;
+                $('#temperature-living-room').html('Living Room: <em>' + data.temperature.living_room + '&#8457;</em>') ;
+                $('#temperature-office').html('Office: <em>' + data.temperature.office + '&#8457;</em>') ;
+
+                // =============================
+                // 2. Add events to each button.
+                // If you wish to add any component that react to certain events, they would be added here.
+                // =============================
+                // Blinds
+                $('#blinds-dining-room-minus-btn').on('click', function(even) {
+                    data.blinds.dining_room = decrementBlind(data.blinds.dining_room) ;
+                    $('#blinds-dining-room').html('Dining Room: <em>' + data.blinds.dining_room + '% Closed</em>') ;
+                }) ;
+                $('#blinds-dining-room-add-btn').on('click', function(event) {
+                    data.blinds.dining_room = incrementBlind(data.blinds.dining_room) ;
+                    $('#blinds-dining-room').html('Dining Room: <em>' + data.blinds.dining_room + '% Closed</em>') ;
+                }) ;
+
+                $('#blinds-hallway-1-minus-btn').on('click', function(event) {
+                    data.blinds.hallway_1 = decrementBlind(data.blinds.hallway_1) ;
+                    $('#blinds-hallway-1').html('Hallway 1: <em>' + data.blinds.hallway_1 + '% Closed</em>') ;
+                }) ;
+                $('#blinds-hallway-1-add-btn').on('click', function(event) {
+                    data.blinds.hallway_1 = incrementBlind(data.blinds.hallway_1) ;
+                    $('#blinds-hallway-1').html('Hallway 1: <em>' + data.blinds.hallway_1 + '% Closed</em>') ;
+                }) ;
+
+                $('#blinds-hallway-2-minus-btn').on('click', function(event) {
+                    data.blinds.hallway_2 = decrementBlind(data.blinds.hallway_2) ;
+                    $('#blinds-hallway-2').html('Hallway 2: <em>' + data.blinds.hallway_2 + '% Closed</em>') ;
+                }) ;
+                $('#blinds-hallway-2-add-btn').on('click', function(event) {
+                    data.blinds.hallway_2 = incrementBlind(data.blinds.hallway_2) ;
+                    $('#blinds-hallway-2').html('Hallway 2: <em>' + data.blinds.hallway_2 + '% Closed</em>') ;
+                }) ;
+
+                $('#blinds-family-room-minus-btn').on('click', function(event) {
+                    data.blinds.family_room = decrementBlind(data.blinds.family_room) ;
+                    $('#blinds-family-room').html('Family Room: <em>' + data.blinds.family_room + '% Closed</em>') ;
+                }) ;
+                $('#blinds-family-room-add-btn').on('click', function(event) {
+                    data.blinds.family_room = incrementBlind(data.blinds.family_room) ;
+                    $('#blinds-family-room').html('Family Room: <em>' + data.blinds.family_room + '% Closed</em>') ;
+                }) ;
+
+                $('#blinds-kitchen-minus-btn').on('click', function(event) {
+                    data.blinds.kitchen = decrementBlind(data.blinds.kitchen) ;
+                    $('#blinds-kitchen').html('Kitchen: <em>' + data.blinds.kitchen + '% Closed</em>') ;
+                }) ;
+                $('#blinds-kitchen-add-btn').on('click', function(event) {
+                    data.blinds.kitchen = incrementBlind(data.blinds.kitchen) ;
+                    $('#blinds-kitchen').html('Kitchen: <em>' + data.blinds.kitchen + '% Closed</em>') ;
+                }) ;
+
+                $('#blinds-living-room-minus-btn').on('click', function(event) {
+                    data.blinds.living_room = decrementBlind(data.blinds.living_room) ;
+                    $('#blinds-living-room').html('Living Room: <em>' + data.blinds.living_room + '% Closed</em>') ;
+                }) ; 
+                $('#blinds-living-room-add-btn').on('click', function(event) {
+                    data.blinds.living_room = incrementBlind(data.blinds.living_room) ;
+                    $('#blinds-living-room').html('Living Room: <em>' + data.blinds.living_room + '% Closed</em>') ;
+                }) ;
+
+                $('#blinds-office-minus-btn').on('click', function(event) {
+                    data.blinds.office = decrementBlind(data.blinds.office) ;
+                    $('#blinds-office').html('Office: <em>' + data.blinds.office + '% Closed</em>') ;
+                }) ;
+                $('#blinds-office-add-btn').on('click', function(event) {
+                    data.blinds.office = incrementBlind(data.blinds.office) ;
+                    $('#blinds-office').html('Office: <em>' + data.blinds.office + '% Closed</em>') ;
+                }) ;
+
+                // Fireplace
+                $('#fireplace-family-room-off-btn').on('click', function(event) {
+                    // Even though we could easily just set this value to false, it clearly illustrates what we are doing, and allows for future modifications for the process of turning off.
+                    data.fireplace.family_room = turnOff(data.fireplace.family_room) ;
+                    $('#fireplace-family-room').html('Family Room: <em>' + (data.fireplace.family_room ? "On" : "Off") + "</em>") ;
+                }) ;
+                $('#fireplace-family-room-on-btn').on('click', function(event) {
+                    data.fireplace.family_room = turnOn(data.fireplace.family_room) ;
+                    $('#fireplace-family-room').html('Family Room: <em>' + (data.fireplace.family_room ? "On" : "Off") + "</em>") ;
+                }) ;
+
+                $('#fireplace-living-room-off-btn').on('click', function(event) {
+                    data.fireplace.living_room = turnOff(data.fireplace.living_room) ;
+                    $('#fireplace-living-room').html('Living Room: <em>' + (data.fireplace.living_room ? "On" : "Off") + "</em>") ;
+                }) ;
+                $('#fireplace-living-room-on-btn').on('click', function(event) {
+                    data.fireplace.living_room = turnOn(data.fireplace.living_room) ;
+                    $('#fireplace-living-room').html('Living Room: <em>' + (data.fireplace.living_room ? "On" : "Off") + "</em>") ;
+                }) ;
+
+                // Garage Doors
+                $('#garage-one-close-btn').on('click', function(event) {
+                    data.garage_doors.one = close(data.garage_doors.one) ;
+                    $('#garage-one').html('One: <em>' + (data.garage_doors.one ? "Open" : "Closed") + '</em>') ;
+                }) ;
+                $('#garage-one-open-btn').on('click', function(event) {
+                    data.garage_doors.one = open(data.garage_doors.one) ;
+                    $('#garage-one').html('One: <em>' + (data.garage_doors.one ? "Open" : "Closed") + '</em>') ;
+                }) ;
+
+                $('#garage-two-close-btn').on('click', function(event) {
+                    data.garage_doors.two = close(data.garage_doors.two) ;
+                    $('#garage-two').html('Two: <em>' + (data.garage_doors.two ? "Open" : "Closed") + '</em>') ;
+                }) ;
+                $('#garage-two-open-btn').on('click', function(event) {
+                    data.garage_doors.two = open(data.garage_doors.two) ;
+                    $('#garage-two').html('Two: <em>' + (data.garage_doors.two ? "Open" : "Closed") + '</em>') ;
+                }) ;
+
+                $('#garage-three-close-btn').on('click', function(event) {
+                    data.garage_doors.three = close(data.garage_doors.three) ;
+                    $('#garage-three').html('Three: <em>' + (data.garage_doors.three ? "Open" : "Closed") + '</em>') ;
+                }) ;
+                $('#garage-three-open-btn').on('click', function(event) {
+                    data.garage_doors.three = open(data.garage_doors.three) ;
+                    $('#garage-three').html('Three: <em>' + (data.garage_doors.three ? "Open" : "Closed") + '</em>') ; 
+                }) ;
+
+                $('#garage-gate-close-btn').on('click', function(event) {
+                    data.garage_doors.gate = close(data.garage_doors.gate) ;
+                    $('#garage-gate').html('Gate: <em>' + (data.garage_doors.gate ? "Open" : "Closed") + '</em>') ;
+                }) ;
+                $('#garage-gate-open-btn').on('click', function(event) {
+                    data.garage_doors.gate = open(data.garage_doors.gate) ;
+                    $('#garage-gate').html('Gate: <em>' + (data.garage_doors.gate ? "Open" : "Closed") + '</em>') ;
+                }) ;
+
+                // Lighting
+                $('#lighting-dining-room-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.dining_room = decrementLight(data.lighting.indoors.dining_room) ;
+                    $('#lighting-dining-room').html('Dining Room: <em>' + data.lighting.indoors.dining_room + '%</em>') ;
+                }) ;
+                $('#lighting-dining-room-add-btn').on('click', function(event) {
+                    data.lighting.indoors.dining_room = incrementLight(data.lighting.indoors.dining_room) ;
+                    $('#lighting-dining-room').html('Dining Room: <em>' + data.lighting.indoors.dining_room + '%</em>') ;
+                }) ;
+
+                $('#lighting-hallway-1-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.hallway_1 = decrementLight(data.lighting.indoors.hallway_1) ;
+                    $('#lighting-hallway-1').html('Hallway 1: <em>' + data.lighting.indoors.hallway_1 + '%</em>') ;
+                }) ;
+                $('#lighting-hallway-1-add-btn').on('click', function(event) {
+                    data.lighting.indoors.hallway_1 = incrementLight(data.lighting.indoors.hallway_1) ;
+                    $('#lighting-hallway-1').html('Hallway 1: <em>' + data.lighting.indoors.hallway_1 + '%</em>') ;
+                }) ;
+
+                $('#lighting-hallway-2-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.hallway_2 = decrementLight(data.lighting.indoors.hallway_2) ;
+                    $('#lighting-hallway-2').html('Hallway 2: <em>' + data.lighting.indoors.hallway_2 + '%</em>') ;
+                }) ;
+                $('#lighting-hallway-2-add-btn').on('click', function(event) {
+                    data.lighting.indoors.hallway_2 = incrementLight(data.lighting.indoors.hallway_2) ;
+                    $('#lighting-hallway-2').html('Hallway 2: <em>' + data.lighting.indoors.hallway_2 + '%</em>') ;
+                }) ;
+
+                $('#lighting-family-room-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.family_room = decrementLight(data.lighting.indoors.family_room) ;
+                    $('#lighting-family-room').html('Family Room: <em>' + data.lighting.indoors.family_room + '%</em>') ;
+                }) ;
+                $('#lighting-family-room-add-btn').on('click', function(event) {
+                    data.lighting.indoors.family_room = incrementLight(data.lighting.indoors.family_room) ;
+                    $('#lighting-family-room').html('Family Room: <em>' + data.lighting.indoors.family_room + '%</em>') ;
+                }) ;
+
+                $('#lighting-kitchen-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.kitchen = decrementLight(data.lighting.indoors.kitchen) ;
+                    $('#lighting-kitchen').html('Kitchen: <em>' + data.lighting.indoors.kitchen + '%</em>') ;
+                }) ;
+                $('#lighting-kitchen-add-btn').on('click', function(event) {
+                    data.lighting.indoors.kitchen = incrementLight(data.lighting.indoors.kitchen) ;
+                    $('#lighting-kitchen').html('Kitchen: <em>' + data.lighting.indoors.kitchen + '%</em>') ;
+                }) ;
+
+                $('#lighting-living-room-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.living_room = decrementLight(data.lighting.indoors.living_room) ;
+                    $('#lighting-living-room').html('Living Room: <em>' + data.lighting.indoors.living_room + '%</em>') ;
+                }) ;
+                $('#lighting-living-room-add-btn').on('click', function(event) {
+                    data.lighting.indoors.living_room = incrementLight(data.lighting.indoors.living_room) ;
+                    $('#lighting-living-room').html('Living Room: <em>' + data.lighting.indoors.living_room + '%</em>') ;
+                }) ;
+
+                $('#lighting-office-minus-btn').on('click', function(event) {
+                    data.lighting.indoors.office = decrementLight(data.lighting.indoors.office) ;
+                    $('#lighting-office').html('Office: <em>' + data.lighting.indoors.office + '%</em>') ;
+                }) ;
+                $('#lighting-office-add-btn').on('click', function(event) {
+                    data.lighting.indoors.office = incrementLight(data.lighting.indoors.office) ;
+                    $('#lighting-office').html('Office: <em>' + data.lighting.indoors.office + '%</em>') ;
+                }) ; 
+
+                $('#lighting-gate-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.frontyard.gate = decrementLight(data.lighting.outdoors.frontyard.gate) ;
+                    $('#lighting-gate').html('Gate: <em>' + data.lighting.outdoors.frontyard.gate + '%</em>') ;
+                }) ;
+                $('#lighting-gate-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.frontyard.gate = incrementLight(data.lighting.outdoors.frontyard.gate) ;
+                    $('#lighting-gate').html('Gate: <em>' + data.lighting.outdoors.frontyard.gate + '%</em>') ;
+                }) ;
+
+                $('#lighting-mailbox-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.frontyard.mailbox = decrementLight(data.lighting.outdoors.frontyard.mailbox) ;
+                    $('#lighting-mailbox').html('Mailbox: <em>' + data.lighting.outdoors.frontyard.mailbox + '%</em>') ;
+                }) ;
+                $('#lighting-mailbox-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.frontyard.mailbox = incrementLight(data.lighting.outdoors.frontyard.mailbox) ;
+                    $('#lighting-mailbox').html('Mailbox: <em>' + data.lighting.outdoors.frontyard.mailbox + '%</em>') ;
+                }) ;
+
+                $('#lighting-porch-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.frontyard.porch = decrementLight(data.lighting.outdoors.frontyard.porch) ;
+                    $('#lighting-porch').html('Porch: <em>' + data.lighting.outdoors.frontyard.porch + '%</em>') ;
+                }) ;
+                $('#lighting-porch-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.frontyard.porch = incrementLight(data.lighting.outdoors.frontyard.porch) ;
+                    $('#lighting-porch').html('Porch: <em>' + data.lighting.outdoors.frontyard.porch + '%</em>') ;
+                }) ;
+
+                $('#lighting-left-side-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.left_side = decrementLight(data.lighting.outdoors.left_side) ;
+                    $('#lighting-left-side').html('Left Side: <em>' + data.lighting.outdoors.left_side + '%</em>') ;
+                }) ;
+                $('#lighting-left-side-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.left_side = incrementBlind(data.lighting.outdoors.left_side) ;
+                    $('#lighting-left-side').html('Left Side: <em>' + data.lighting.outdoors.left_side + '%</em>') ;
+                }) ;
+
+                $('#lighting-right-side-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.right_side = decrementLight(data.lighting.outdoors.right_side) ;
+                    $('#lighting-right-side').html('Right Side: <em>' + data.lighting.outdoors.right_side + '%</em>') ;
+                }) ;
+                $('#lighting-right-side-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.right_side = incrementLight(data.lighting.outdoors.right_side) ;
+                    $('#lighting-right-side').html('Right Side: <em>' + data.lighting.outdoors.right_side + '%</em>') ;
+                }) ;
+
+                $('#lighting-lawn-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.backyard.lawn = decrementLight(data.lighting.outdoors.backyard.lawn) ;
+                    $('#lighting-lawn').html('Lawn: <em>' + data.lighting.outdoors.backyard.lawn + '%</em>') ;
+                }) ;
+                $('#lighting-lawn-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.backyard.lawn = incrementLight(data.lighting.outdoors.backyard.lawn) ;
+                    $('#lighting-lawn').html('Lawn: <em>' + data.lighting.outdoors.backyard.lawn + '%</em>') ;
+                }) ;
+
+                $('#lighting-patio-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.backyard.patio = decrementLight(data.lighting.outdoors.backyard.patio) ;
+                    $('#lighting-patio').html('Patio: <em>' + data.lighting.outdoors.backyard.patio+ '%</em>') ;
+                }) ;
+                $('#lighting-patio-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.backyard.patio = incrementLight(data.lighting.outdoors.backyard.patio) ;
+                    $('#lighting-patio').html('Patio: <em>' + data.lighting.outdoors.backyard.patio+ '%</em>') ;
+                }) ;
+
+                $('#lighting-sports-court-minus-btn').on('click', function(event) {
+                    data.lighting.outdoors.backyard.sports_court = decrementLight(data.lighting.outdoors.backyard.sports_court) ;
+                    $('#lighting-sports-court').html('Sports Court: <em>' + data.lighting.outdoors.backyard.sports_court + '%</em>') ;
+                }) ;
+                $('#lighting-sports-court-add-btn').on('click', function(event) {
+                    data.lighting.outdoors.backyard.sports_court = incrementLight(data.lighting.outdoors.backyard.sports_court) ;
+                    $('#lighting-sports-court').html('Sports Court: <em>' + data.lighting.outdoors.backyard.sports_court + '%</em>') ;
+                }) ;
+
+                // Pool
+                $('#pool-light-off-btn').on('click', function(event) {
+                    data.pool.light = turnOff(data.pool.light) ;
+                    $('#pool-light').html('Light: <em>' + (data.pool.light ? "On" : "Off") + "</em>") ;
+                }) ;
+                $('#pool-light-on-btn').on('click', function(event) {
+                    data.pool.light = turnOn(data.pool.light) ;
+                    $('#pool-light').html('Light: <em>' + (data.pool.light ? "On" : "Off") + "</em>") ;
+                }) ;
+
+                $('#pool-sweeper-off-btn').on('click', function(event) {
+                    data.pool.sweeper = turnOff(data.pool.sweeper) ;
+                    $('#pool-sweeper').html('Sweeper: <em>' + (data.pool.sweeper ? "On" : "Off") + "</em>") ;
+                }) ;
+                $('#pool-sweeper-on-btn').on('click', function(event) {
+                    data.pool.sweeper = turnOn(data.pool.sweeper) ;
+                    $('#pool-sweeper').html('Sweeper: <em>' + (data.pool.sweeper ? "On" : "Off") + "</em>") ;
+                }) ;
+
+                $('#pool-temperature-minus-btn').on('click', function(event) {
+                    data.pool.temperature = decrementPoolTemperature(data.pool.temperature) ;
+                    $('#pool-temperature').html('Temperature: <em>' + data.pool.temperature + '&#8457;</em>') ;
+                }) ;
+                $('#pool-temperature-add-btn').on('click', function(event) {
+                    data.pool.temperature = incrementPoolTemperature(data.pool.temperature) ;
+                    $('#pool-temperature').html('Temperature: <em>' + data.pool.temperature + '&#8457;</em>') ;
+                }) ;
+
+                // Temperature
+                $('#temperature-dining-room-minus-btn').on('click', function(event) {
+                    data.temperature.dining_room = decrementHouseTemperature(data.temperature.dining_room) ;
+                    $('#temperature-dining-room').html('Dining Room: <em>' + data.temperature.dining_room + '&#8457;</em>') ;
+                }) ;
+                $('#temperature-dining-room-add-btn').on('click', function(event) {
+                    data.temperature.dining_room = incrementHouseTemperature(data.temperature.dining_room) ;
+                    $('#temperature-dining-room').html('Dining Room: <em>' + data.temperature.dining_room + '&#8457;</em>') ;
+                }) ;
+
+                $('#temperature-hallway-1-minus-btn').on('click', function(event) {
+                    data.temperature.hallway_1 = decrementHouseTemperature(data.temperature.hallway_1) ;
+                    $('#temperature-hallway-1').html('Hallway 1: <em>' + data.temperature.hallway_1 + '&#8457;</em>') ;
+                }) ;
+                $('#temperature-hallway-1-add-btn').on('click', function(event) {
+                    data.temperature.hallway_1 = incrementHouseTemperature(data.temperature.hallway_1) ;
+                    $('#temperature-hallway-1').html('Hallway 1: <em>' + data.temperature.hallway_1 + '&#8457;</em>') ;
+                }) ;
+
+                $('#temperature-hallway-2-minus-btn').on('click', function(event) {
+                    data.temperature.hallway_2 = decrementHouseTemperature(data.temperature.hallway_2) ;
+                    $('#temperature-hallway-2').html('Hallway 2: <em>' + data.temperature.hallway_2 + '&#8457;</em>') ;
+                }) ;
+                $('#temperature-hallway-2-add-btn').on('click', function(event) {
+                    data.temperature.hallway_2 = incrementHouseTemperature(data.temperature.hallway_2) ;
+                    $('#temperature-hallway-2').html('Hallway 2: <em>' + data.temperature.hallway_2 + '&#8457;</em>') ;
+                }) ;
+
+                $('#temperature-family-room-minus-btn').on('click', function(event) {
+                    data.temperature.family_room = decrementHouseTemperature(data.temperature.family_room) ;
+                    $('#temperature-family-room').html('Family Room: <em>' + data.temperature.family_room + '&#8457;</em>') ; 
+                }) ;
+                $('#temperature-family-room-add-btn').on('click', function(event) {
+                    data.temperature.family_room = incrementHouseTemperature(data.temperature.family_room) ;
+                    $('#temperature-family-room').html('Family Room: <em>' + data.temperature.family_room + '&#8457;</em>') ;
+                }) ;
+
+                $('#temperature-kitchen-minus-btn').on('click', function(event) {
+                    data.temperature.kitchen = decrementHouseTemperature(data.temperature.kitchen) ;
+                    $('#temperature-kitchen').html('Kitchen: <em>' + data.temperature.kitchen + '&#8457;</em>') ;
+                }) ;
+                $('#temperature-kitchen-add-btn').on('click', function(event) {
+                    data.temperature.kitchen = incrementHouseTemperature(data.temperature.kitchen) ;
+                    $('#temperature-kitchen').html('Kitchen: <em>' + data.temperature.kitchen + '&#8457;</em>') ;
+                }) ;
+
+                $('#temperature-living-room-minus-btn').on('click', function(event) {
+                    data.temperature.living_room = decrementHouseTemperature(data.temperature.living_room) ;
+                    $('#temperature-living-room').html('Living Room: <em>' + data.temperature.living_room + '&#8457;</em>') ;
+                }) ;
+                $('#temperature-living-room-add-btn').on('click', function(event) {
+                    data.temperature.living_room = incrementHouseTemperature(data.temperature.living_room) ;
+                    $('#temperature-living-room').html('Living Room: <em>' + data.temperature.living_room + '&#8457;</em>') ;
+                }) ;
+
+                $('#temperature-office-minus-btn').on('click', function(event) {
+                    data.temperature.office = decrementHouseTemperature(data.temperature.office) ;
+                    $('#temperature-office').html('Office: <em>' + data.temperature.office + '&#8457;</em>') ;
+                }) ;
+                $('#temperature-office-add-btn').on('click', function(event) {
+                    data.temperature.office = incrementHouseTemperature(data.temperature.office) ;
+                    $('#temperature-office').html('Office: <em>' + data.temperature.office + '&#8457;</em>') ;
+                }) ;
+
+            }) ;
+
+            // =============================
+            // Helper Functions
+            // =============================
+            // As previosly mentioned, some of these helped functions, in terms of full functionality, are not required.
+            // However, they illustrate the fact that we can decouple bevior and future proof this program.
+            // =============================
+
+            function decrementBlind(val) {
+                if (val > 0) {
+                    return val - 5 ;
+                } else {
+                    return 0 ;
+                }
+            }
+
+            function incrementBlind(val) {
+                if (val < 100) {
+                    return val + 5 ;
+                } else {
+                    return 100 ;
+                }
+            }
+
+            function turnOff(val) {
+                return false ;
+            }
+
+            function turnOn(val) {
+                return true ;
+            }
+
+            function open(val) {
+                return true ;
+            }
+
+            function close(val) {
+                return false ;
+            }
+
+            function decrementLight(val) {
+                if (val > 0) {
+                    return val - 5 ;
+                } else {
+                    return 0 ;
+                }
+            }
+
+            function incrementLight(val) {
+                if (val < 100) {
+                    return val + 5 ;
+                } else {
+                    return 1.0 ;
+                }
+            }
+
+            function decrementPoolTemperature(val) {
+                if (val > 75) {
+                    return val - 1 ;
+                } else {
+                    return 75 ;
+                }
+            }
+
+            function incrementPoolTemperature(val) {
+                if (val < 104) {
+                    return val + 1 ;
+                } else {
+                    return 104 ;
+                }
+            }
+
+            function decrementHouseTemperature(val) {
+                if (val > 60) {
+                    return val - 1;
+                } else {
+                    return 60 ;
+                }
+            }
+
+            function incrementHouseTemperature(val) {
+                if(val < 88) {
+                    return val + 1 ;
+                } else {
+                    return 88 ;
+                }
+            }
+
+        </script>
+
+    </head>
+
+    <body class='bg-light'>
+
+        <div class='px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center'>
+            <h1 class='display-4'><a href='#'>Control 5</a></h1>
+            <p><i> • Why <b>not</b> yourself with <b>the</b> top tier solution for home automation? • </i></p>
+        </div>
+
+        <main role="main" class="container">
+      
+            <!-- BLINDS -->
+      
+            <div class='row'>
+
+                <div class='panel panel-success'>
+
+                    <div class='panel-body'>
+                        <h3 class="border-bottom border-gray pb-2 mb-0">Blinds</h3>
+                    </div>
+            
+                    <div class='panel-footer'>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='blinds-dining-room'>Dining Room</p>
+
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-dining-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-dining-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='blinds-hallway-1'>Hallway 1</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-hallway-1-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-hallway-2-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='blinds-hallway-2'>Hallway 2</p>
+
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-hallway-2-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-hallway-2-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='blinds-family-room'>Family room</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-family-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-family-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='blinds-kitchen'>Kitchen</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-kitchen-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-kitchen-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='blinds-living-room'>Living Room</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-living-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-living-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='blinds-office'>Office</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='blinds-office-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='blinds-office-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                        </ul>
+                    </div>
+            
+                </div> <!-- BLINDS PANEL -->
+
+            </div>
+
+            <!-- FIREPLACE -->
+
+            <div class='row'>
+
+                <div class='panel panel-success'>
+                    <div class='panel-body'>
+                        <h3 class="border-bottom border-gray pb-2 mb-0">Fireplace</h3>
+                    </div>
+
+                    <div class='panel-footer'>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='fireplace-family-room'>Family Room</p>
+        
+                                <div class='btn-group' role='group'>
+                                    <button id='fireplace-family-room-off-btn' type='button' class='btn btn-default'>Off</button>
+                                    <button id='fireplace-family-room-on-btn' type='button' class='btn btn-default'>On</button>
+                                </div>
+        
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='fireplace-living-room'>Living Room</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='fireplace-living-room-off-btn' type='button' class='btn btn-default'>Off</button>
+                                    <button id='fireplace-living-room-on-btn' type='button' class='btn btn-default'>On</button>
+                            </div>
+    
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- GARAGE DOORS -->
+
+            <div class='row'>
+
+                <div class='panel panel-success'>
+                    <div class='panel-body'>
+                        <h3 class="border-bottom border-gray pb-2 mb-0">Garage Doors</h3>
+                    </div>
+
+                    <div class='panel-footer'>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='garage-one'>One</p>
+        
+                                <div class='btn-group' role='group'>
+                                    <button id='garage-one-close-btn' type='button' class='btn btn-default'>Close</button>
+                                    <button id='garage-one-open-btn' type='button' class='btn btn-default'>Open</button>
+                                </div>
+        
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='garage-two'>Two</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='garage-two-close-btn' type='button' class='btn btn-default'>Close</button>
+                                    <button id='garage-two-open-btn' type='button' class='btn btn-default'>Open</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='garage-three'>Three</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='garage-three-close-btn' type='button' class='btn btn-default'>Close</button>
+                                    <button id='garage-three-open-btn' type='button' class='btn btn-default'>Open</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='garage-gate'>Gate</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='garage-gate-close-btn' type='button' class='btn btn-default'>Close</button>
+                                    <button id='garage-gate-open-btn' type='button' class='btn btn-default'>Open</button>
+                                </div>
+    
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LIGHTING -->
+
+            <div class='row'>
+
+                <div class='panel panel-success'>
+                    <div class='panel-body'>
+                        <h3 class="border-bottom border-gray pb-2 mb-0">Lighting</h3>
+                    </div>
+
+                    <div class='panel-footer'>
+
+                        <h4>Indoors</h4>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='lighting-dining-room'>Dining Room</p>
+        
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-dining-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-dining-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+        
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-hallway-1'>Hallway 1</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-hallway-1-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-hallway-1-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-hallway-2'>Hallway 2</p>
+        
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-hallway-2-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-hallway-2-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+        
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-family-room'>Family room</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-family-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-family-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-kitchen'>Kitchen</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-kitchen-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-kitchen-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-living-room'>Living Room</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-living-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-living-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-office'>Office</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-office-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-office-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                        </ul>
+
+                        <h4>Outdoors</h4>
+                        <h6>Front Yard</h6>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='lighting-gate'>Gate</p>
+                    
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-gate-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-gate-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+                    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-mailbox'>Mailbox</p>
+                
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-mailbox-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-mailbox-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+                
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-porch'>Porch</p>
+                
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-porch-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-porch-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+                
+                            </li>
+                        </ul>
+
+                        <h6>Sides</h6>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='lighting-left-side'>Left Side</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-left-side-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-left-side-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-right-side'>Right Side</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-right-side-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-right-side-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                        </ul>
+
+                        <h6>Backyard</h6>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='lighting-lawn'>Lawn</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-lawn-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-lawn-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-patio'>Patio</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-patio-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-patio-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='lighting-sports-court'>Sports Court</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='lighting-sports-court-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='lighting-sports-court-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- POOL -->
+
+            <div class='row'>
+
+                <div class='panel panel-success'>
+                    <div class='panel-body'>
+                        <h3 class="border-bottom border-gray pb-2 mb-0">Pool</h3>
+                    </div>
+
+                    <div class='panel-footer'>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='pool-light'>Light</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='pool-light-off-btn' type='button' class='btn btn-default'>Off</button>
+                                    <button id='pool-light-on-btn' type='button' class='btn btn-default'>On</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='pool-sweeper'>Sweeper</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='pool-sweeper-off-btn' type='button' class='btn btn-default'>Off</button>
+                                    <button id='pool-sweeper-on-btn' type='button' class='btn btn-default'>On</button>
+                                </div>
+            
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='pool-temperature'>Temperature</p>
+            
+                                <div class='btn-group' role='group'>
+                                    <button id='pool-temperature-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='pool-temperature-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+            
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TEMPERATURE -->
+
+            <div class='row'>
+                <div class='panel panel-success'>
+                    <div class='panel-body'>
+                        <h3 class="border-bottom border-gray pb-2 mb-0">Temperature</h3>
+                    </div>
+            
+                    <div class='panel-footer'>
+                        <ul class='list-group'>
+                            <li class='list-group-item'>
+                                <p id='temperature-dining-room'>Dining Room</p>
+
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-dining-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-dining-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='temperature-hallway-1'>Hallway 1</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-hallway-1-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-hallway-1-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='temperature-hallway-2'>Hallway 2</p>
+
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-hallway-2-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-hallway-2-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='temperature-family-room'>Family room</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-family-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-family-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='temperature-kitchen'>Kitchen</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-kitchen-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-kitchen-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='temperature-living-room'>Living Room</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-living-room-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-living-room-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                            <li class='list-group-item'>
+                                <p id='temperature-office'>Office</p>
+    
+                                <div class='btn-group' role='group'>
+                                    <button id='temperature-office-minus-btn' type='button' class='btn btn-default'>-</button>
+                                    <button id='temperature-office-add-btn' type='button' class='btn btn-default'>+</button>
+                                </div>
+    
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <footer class="pt-4 my-md-5 pt-md-5 border-top">
+                <div class="row">
+                    <div class="col-12 col-md">
+                        <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+                        <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
+                    </div>
+                </div>
+            </footer>
+
+          </main> <!-- END OF MAIN -->
+
+    </body>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+    
+        footer {
+            padding-bottom: 15px ;
+        }
+
+        a {
+            color: #F51A1A ;
+        }
+        
+    </style>
+
+</html>
